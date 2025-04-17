@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Joke Generator with Rating</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f8ff;
+      text-align: center;
+      padding: 40px;
+    }
+
+    .joke-box {
+      background-color: #ffffff;
+      border: 2px solid #ddd;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 500px;
+      margin: 0 auto 20px auto;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .stars {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .star {
+      font-size: 30px;
+      cursor: pointer;
+      color: #ccc;
+    }
+
+    .star.selected {
+      color: gold;
+    }
+
+    #rating-result {
+      margin-top: 15px;
+      font-weight: bold;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <a href="index.html">Resume Page</a>
+    <a href="scratch.html">From Scratch</a>
+
+  <div class="joke-box">
+    <h2>😂 Random Joke Generator</h2>
+    <p id="joke">Click the button to get a joke!</p>
+    <button onclick="generateJoke()">New Joke</button>
+
+    <div class="stars" id="star-rating">
+      <span class="star" onclick="selectRating(1)">★</span>
+      <span class="star" onclick="selectRating(2)">★</span>
+      <span class="star" onclick="selectRating(3)">★</span>
+      <span class="star" onclick="selectRating(4)">★</span>
+      <span class="star" onclick="selectRating(5)">★</span>
+    </div>
+
+    <button onclick="submitRating()">Rate</button>
+    <div id="rating-result"></div>
+  </div>
+
+  <script>
+    const jokes = [
+      "Why don't scientists trust atoms? Because they make up everything!",
+      "I told my wife she was drawing her eyebrows too high. She looked surprised.",
+      "Why don’t skeletons fight each other? They don’t have the guts.",
+      "I asked my dog what’s two minus two. He said nothing.",
+      "Parallel lines have so much in common. It’s a shame they’ll never meet.",
+      "What do you call fake spaghetti? An impasta!",
+      "Why can't your nose be 12 inches long? Because then it would be a foot!",
+      "I only know 25 letters of the alphabet. I don’t know y.",
+      "What do you call cheese that isn't yours? Nacho cheese!",
+      "Did you hear about the kidnapping at school? It's fine, he woke up!"
+    ];
+
+    function generateJoke() {
+      const randomIndex = Math.floor(Math.random() * jokes.length);
+      document.getElementById("joke").textContent = jokes[randomIndex];
+      resetStars();
+      document.getElementById("rating-result").textContent = "";
+    }
+
+    let selectedRating = 0;
+
+    function selectRating(rating) {
+      selectedRating = rating;
+      const stars = document.querySelectorAll(".star");
+      stars.forEach((star, index) => {
+        if (index < rating) {
+          star.classList.add("selected");
+        } else {
+          star.classList.remove("selected");
+        }
+      });
+    }
+
+    function submitRating() {
+      if (selectedRating === 0) {
+        document.getElementById("rating-result").textContent = "Please select a rating before submitting!";
+      } else {
+        document.getElementById("rating-result").textContent = `You rated this joke ${selectedRating} star${selectedRating > 1 ? "s" : ""}.`;
+      }
+    }
+
+    function resetStars() {
+      selectedRating = 0;
+      document.querySelectorAll(".star").forEach(star => star.classList.remove("selected"));
+    }
+  </script>
+
+</body>
+</html>
